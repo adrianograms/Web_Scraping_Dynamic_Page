@@ -1,15 +1,17 @@
 from selenium import webdriver
 from bs4 import BeautifulSoup
+from selenium.webdriver.common.by import By
 from time import sleep
 import re
 
-def load_page_information(url, jumps, wait_time):
+def load_page_information(url, jumps, wait_time, popular):
     """Load the dynamic page and return the html generated
 
     Args:
         url (string): Url of the site being scraped, in this case, a youtube channel
         jumps (int): Number of jumps given in the page to load more videos
         wait_time (int): Waited time between each jump
+        popular (boolean): Order the channel videos by most popular
 
     Returns:
         object: Returns the html of the page
@@ -20,6 +22,10 @@ def load_page_information(url, jumps, wait_time):
     driver = webdriver.Firefox(options=options)
     driver.get(url)
     sleep(5) # Time to render all the dynamic componenets
+
+    if popular:
+        driver.find_element(By.CSS_SELECTOR,"yt-formatted-string[title='Popular']").click()
+        sleep(3)
 
     for _ in range(jumps):
         driver.execute_script("window.scrollTo(0, window.scrollY + 10000);")
@@ -60,16 +66,17 @@ def scrape_page(html):
         
     return cards_info
 
-def get_video_infomations(url, jumps, wait_time):
+def get_video_infomations(url, jumps, wait_time, popular):
     """Get informations about some videos of a specific channel on youtube
 
     Args:
         url (string): Url of the site, in short, is the url of the youtube channel
         jumps (int): Number of jumps given in the scraping (jump on the page to load more videos)
         wait_time (int): Wait time between each jump
+        popular (boolean): Order the channel videos by most popular
 
     Returns:
         array: Returns a array with all the informations of the videos scraped
     """
-    html = load_page_information(url, jumps, wait_time)
+    html = load_page_information(url, jumps, wait_time, popular)
     return scrape_page(html)

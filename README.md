@@ -8,3 +8,4 @@ This API have only one endpoint (home /), where you can vary the paramaters to c
 - name_channel: This paramater is the name of the channel to be scraped (without the @ being used recently)
 - jumps: Decides the number of jumps given in the page (this jumps are used to load more videos). Default is 0
 - wait_time: Time between each jump in seconds, depends on your internet to load the page, so the slower the internet, the bigger need to be this wait_time. Default is 3 seconds
+- popular: Order by popularity if true, orders by popularity. Default is false (valid values, <b>true</b> and <b>false</b>)

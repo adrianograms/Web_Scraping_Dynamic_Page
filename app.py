@@ -24,9 +24,17 @@ def channel_scraping():
         if wait_time is None:
             wait_time = 4
         wait_time = int(wait_time)
+
+        popular = request.args.get('popular')
+        if popular is None:
+            popular = False
+        elif 'TRUE' == popular.upper():
+            popular = True
+        else:
+            popular = False
         
         url = base_url + name_channel + '/videos'
-        video_infos = get_video_infomations(url, jumps, wait_time)
+        video_infos = get_video_infomations(url, jumps, wait_time, popular)
         return jsonify(video_infos)
     except ValueError:
         return "Wrong type", 400
