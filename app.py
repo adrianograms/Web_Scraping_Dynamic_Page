@@ -6,6 +6,11 @@ base_url = 'https://www.youtube.com/'
 
 @app.route('/')
 def channel_scraping():
+    """Scrape a youtube channel page for all videos (informations about the videos)
+
+    Returns:
+        string: Return all the video informations in a json format
+    """
     try:
         name_channel = request.args.get('name_channel')
         name_channel = '@' + name_channel
